@@ -1,0 +1,15 @@
+#忽略依赖包,后续可通过package.json文件中的记录重新npm install
+node_modules
+
+#忽略隐藏的项目配置文件
+*.idea
+*.iml
+
+#忽略vscode开发编辑器的配置文件
+*.vscode
+
+#忽略本地版本库
+.git
+
+#忽略日志文件
+*.log
