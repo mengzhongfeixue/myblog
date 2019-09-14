@@ -153,6 +153,32 @@ h6, .h6 {
   color: #999;
 }
 
+.art{
+  margin-bottom:40px;
+}
+.art-title{
+  border-bottom:1px solid #ccc;
+  padding:0 0 5px 0;
+}
+.art-content{
+  margin-bottom:10px;
+}
+.art-meta{
+  font-size:0.75em;
+}
+.art-meta>span{
+  display:inline-block;
+  margin:0 5px;
+  border-right:1px solid #ddd;
+  padding-right:10px;
+}
+.art-meta>span:first-of-type{
+  margin-left:0;
+}
+.art-meta>span:last-of-type{
+  margin-right:0;
+  border-right:0;
+}
 
 /*
  * Footer
