@@ -40,9 +40,11 @@
                               console.log(err);
                               return;
                           }
+                          //console.log(docs);
                           callback(docs);              
                       });
         }    
         
+        //getArticles();
  
     module.exports=getArticles;

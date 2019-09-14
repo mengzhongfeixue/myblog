@@ -27,7 +27,7 @@ block section2
       .art-meta
         span.art-created
           |发布时间：&nbsp;
-          =art.created
+          =sd.format(art.created,'YYYY-MM-DD HH:mm')
         span.art-author
           |作者：&nbsp;
           =art.author.name
