@@ -12,8 +12,11 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "lorem-ipsum": "^2.0.3",
     "mongoose": "^5.7.0",
     "morgan": "~1.9.1",
-    "silly-datetime": "^0.1.2"
+    "silly-datetime": "^0.1.2",
+    "slug": "^1.1.0",
+    "truncate": "^2.1.0"
   }
 }

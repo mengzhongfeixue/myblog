@@ -161,6 +161,10 @@ h6, .h6 {
   padding:0 0 5px 0;
 }
 .art-content{
+  
+}
+.art-link{
+  display: block;
   margin-bottom:10px;
 }
 .art-meta{

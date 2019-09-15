@@ -1,0 +1,33 @@
+extends content
+
+block article
+  
+  .blog-post  
+
+    block section
+      
+
+block sidebar
+  .sidebar-module.sidebar-module-inset
+    h4 随笔
+    p
+      p.blog-post-meta
+      | January 1, 2018 by 
+      a(href='#') mengfei
+      p  mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur...
+  .sidebar-module
+    h4 文章分类
+    ol.list-unstyled
+      each category in categories
+        li
+          a(href='articles/category/'+category.name,target="blank")=category.name
+      
+  .sidebar-module
+    h4 友情链接
+    ol.list-unstyled
+      li
+        a(href='#') 腾讯
+      li
+        a(href='#') 百度
+      li
+        a(href='#') 阿里巴巴

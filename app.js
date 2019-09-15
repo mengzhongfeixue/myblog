@@ -3,12 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var sd = require('silly-datetime');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var blogRouter = require('./routes/blog');
 var adminRouter = require('./routes/admin');
+
+//var categoryModel = require('./models/category');
 
 var app = express();
 
@@ -38,6 +39,16 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+    
+    //此种方式不可取，异步原因可能导致后面使用到categories时，数据库还没查到。
+	// categoryModel.find(function(err,categories){
+	// 	if(err){
+	// 		return next(err);
+	// 	}
+	// 	app.locals.categories = categories;
+	// 	next();
+	// })
+    
   
 
   // render the error page
