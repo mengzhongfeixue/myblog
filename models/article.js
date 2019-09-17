@@ -1,8 +1,9 @@
 // article model
-var mongoose = require('./db.js'),
-    Schema = mongoose.Schema;
+const mongoose = require('./db.js'),
+    Schema = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
 
-var ArticleSchema = new mongoose.Schema({
+let ArticleSchema = new mongoose.Schema({
 	title:{type: String, required: true},
 	content:{type: String, required: true},
 	slug:{type: String, required: true},

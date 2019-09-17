@@ -184,6 +184,10 @@ h6, .h6 {
   border-right:0;
 }
 
+.page{
+  text-align: center;
+}
+
 /*
  * Footer
  */

@@ -28,16 +28,25 @@
         next(arts,pageNum,pageCount);       
       }
  
-      //获取分类
+      //获取所有分类
        async function getCategories(callback){
         let gc = await CategoryModel.find().exec();
         callback(gc);
       }
+
+      //获取所有作者
+        async function getUsers(callback){
+          let AllUsers = await UserModel.find().exec();
+          callback(AllUsers);
+        }
     
 
       module.exports={
+        getCategories,
+        getUsers,
         getArticles,
-        getCategories
+        //getArticlesByCategory,
+        //getArticlesByUser
       } 
        
  

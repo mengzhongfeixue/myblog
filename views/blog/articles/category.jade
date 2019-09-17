@@ -1,4 +1,4 @@
-extends article
+extends ../home/article
 
 block section
   //文章列表
@@ -7,7 +7,7 @@ block section
       h3.art-title
         =art.title
       .art-content
-        =truncate(art.content,150)
+          =truncate(art.content,150)
       span.art-link
         a(href="articles/view/"+art._id,target="blank") 查看全文
 
@@ -17,10 +17,10 @@ block section
           =sd.format(art.created,'YYYY-MM-DD HH:mm')
         span.art-author
           |作者：&nbsp;
-          a(href='/blog/articles/author?author='+art.author.name,target="blank")=art.author.name
+          a(href='author?author='+art.author.name,target="blank")=art.author.name
         span.art-category
           |分类：&nbsp;
-          a(href='/blog/articles/category?category='+art.category.name,target="blank")=art.category.name
+          a(href='category?category='+art.category.name,target="blank")=art.category.name
         span.art-comment
           |评论：&nbsp;
           =art.comments.length||0
@@ -35,10 +35,15 @@ block section
         while currentPage <= pageCount
           if(currentPage === pageNum)
             li.active
-              a(href='/blog?page='+currentPage)=currentPage++
+              a(href='category?page='+currentPage)=currentPage++
           else
             li
-              a(href='/blog?page='+currentPage)=currentPage++    
+              a(href='category?page='+currentPage)=currentPage++    
+
+      
+          
+        
+
 
       
           

@@ -20,8 +20,16 @@ block sidebar
     ol.list-unstyled
       each category in categories
         li
-          a(href='articles/category/'+category.name,target="blank")=category.name
-      
+          a(href='/blog/articles/category?category='+category.name,target="blank")=category.name
+
+  .sidebar-module
+    h4 本月活跃
+    ol.list-unstyled
+      li
+        a(href='/blog/articles/author?author='+'admin',target="blank") admin
+      li
+        a(href='/blog/articles/author?author='+'张三',target="blank") 张三
+
   .sidebar-module
     h4 友情链接
     ol.list-unstyled
