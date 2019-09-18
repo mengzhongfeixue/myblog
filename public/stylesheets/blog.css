@@ -157,11 +157,12 @@ h6, .h6 {
   margin-bottom:40px;
 }
 .art-title{
-  border-bottom:1px solid #ccc;
+  //border-bottom:1px solid #ccc;
   padding:0 0 5px 0;
+  text-align: center;
 }
 .art-content{
-  
+  text-indent: 2em;
 }
 .art-link{
   display: block;
@@ -169,6 +170,7 @@ h6, .h6 {
 }
 .art-meta{
   font-size:0.75em;
+  text-align: right;
 }
 .art-meta>span{
   display:inline-block;
@@ -188,6 +190,18 @@ h6, .h6 {
   text-align: center;
 }
 
+
+.art-comments{
+  margin-top:20px;
+}
+
+.art-comment-list{
+  margin-bottom:30px;
+}
+.art-comment-item{
+  padding-left:20px;
+  margin-bottom:20px;
+}
 /*
  * Footer
  */

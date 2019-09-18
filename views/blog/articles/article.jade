@@ -1,0 +1,67 @@
+extends ../home/article
+
+append css
+  link(rel='stylesheet',href='https://cdn.bootcss.com/font-awesome/5.10.2/css/all.min.css')
+
+block section
+ 
+  div.art
+    h3.art-title
+      =art.title
+
+
+    .art-meta
+
+      span.art-author
+        i.fa.fa-user
+        |&nbsp;&nbsp;
+        a(href='/blog/articles/author?author='+art.author.name,target="_blank")=art.author.name
+      span.art-category
+        i.fa.fa-list
+        |&nbsp;&nbsp;
+        a(href='/blog/articles/category?category='+art.category.name,target="_blank")=art.category.name
+      span.art-comment
+        i.fa.fa-comment
+        |&nbsp;&nbsp;
+        =art.comments.length||0
+      span.art-favorate
+        a(href='/blog/articles/article/favorate?_id='+art._id)       
+          i.fa.fa-star
+        |&nbsp;&nbsp;
+        =art.meta.favoraites||0
+      span.art-created
+        i.fa.fa-calendar
+        |&nbsp;&nbsp;
+        =sd.format(art.created,'YYYY-MM-DD HH:mm')
+    
+    .art-content
+      =art.content
+
+    .art-comments
+      h3 用户评论
+
+      div.art-comment-list
+        if art.comments.length
+          each comment in art.comments
+            div.art-comment-item
+
+              p.art-comment-content=comment.content
+              div.comment-meta
+                h5.pull-right
+                  a=comment.uid
+                  |&nbsp;&nbsp;
+                  small=sd.format(comment.created,'HH:mm  MM-DD-YYYY')
+                           
+        else
+          p.alert.alert-info 还没有评论
+      form.art-comment-form(action='/blog/articles/article/comment/'+art._id,method='post',enctype='application/x-www-form-urlencoded')
+        h4 添加评论
+        div.form-group
+          input(type='hidden',name='user_id',value='一缕青烟')
+          textarea.form-control(type='text',name='content',placeholder='请输入内容')
+        button.btn.btn-primary 提交
+
+
+      
+          
+        

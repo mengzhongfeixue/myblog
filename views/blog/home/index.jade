@@ -5,11 +5,12 @@ block section
   each art in articles
     div.art
       h3.art-title
-        =art.title
+        a(href="/blog/articles/article?slug="+art.slug)
+          =art.title
       .art-content
         =truncate(art.content,150)
       span.art-link
-        a(href="articles/view/"+art._id,target="blank") 查看全文
+        a(href="/blog/articles/article?_id="+art._id) 查看全文
 
       .art-meta
         span.art-created

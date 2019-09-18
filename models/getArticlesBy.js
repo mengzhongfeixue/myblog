@@ -36,7 +36,7 @@
                         .limit(pageSize)
                         .exec(function(err,arts){
                         	//console.log(arts,pageNum,pageCount)
-                        	callback(arts,pageNum,pageCount) 
+                        	callback(arts,pageNum,pageCount,name) 
                         });              
 	    })
 
@@ -72,7 +72,7 @@
 		                        .limit(pageSize)
 		                        .exec(function(err,arts){
 		                        	//console.log(arts,pageNum,pageCount)
-		                        	callback(arts,pageNum,pageCount) 
+		                        	callback(arts,pageNum,pageCount,name) 
 		                        });              
 	    })
 

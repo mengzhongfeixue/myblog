@@ -1,7 +1,9 @@
 extends ../home/article
 
 block section
-  //文章列表
+  h2.page-header
+    =title
+    |&nbsp;分类下的所有文章列表
   each art in articles
     div.art
       h3.art-title
@@ -9,7 +11,7 @@ block section
       .art-content
           =truncate(art.content,150)
       span.art-link
-        a(href="articles/view/"+art._id,target="blank") 查看全文
+        a(href="article/"+art._id,target="_blank") 查看全文
 
       .art-meta
         span.art-created
@@ -17,10 +19,10 @@ block section
           =sd.format(art.created,'YYYY-MM-DD HH:mm')
         span.art-author
           |作者：&nbsp;
-          a(href='author?author='+art.author.name,target="blank")=art.author.name
+          a(href='author?author='+art.author.name,target="_blank")=art.author.name
         span.art-category
           |分类：&nbsp;
-          a(href='category?category='+art.category.name,target="blank")=art.category.name
+          a(href='category?category='+art.category.name,target="_blank")=art.category.name
         span.art-comment
           |评论：&nbsp;
           =art.comments.length||0
