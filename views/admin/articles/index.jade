@@ -1,0 +1,56 @@
+extends ../layout
+
+
+block section
+  h2.sub-header.art-manage-title #{title}
+  .table-responsive
+    table.table.table-bordered.table-hover
+      thead.art-manage-th
+        tr
+          th(width="30%") 
+            a('/admin/articles/sort?sort_by=title') 标题
+          th 
+            a('/admin/articles/sort?sort_by=category') 分类
+          th 
+            a('/admin/articles/sort?sort_by=author') 作者
+          th 
+            a('/admin/articles/sort?sort_by=favorate') 被赞
+          th 
+            a('/admin/articles/sort?sort_by=comments') 评论
+          th 
+            a('/admin/articles/sort?sort_by=published') 状态
+          th 
+            a('/admin/articles/sort?sort_by=created') 创建时间
+          th  管理
+      tbody
+      each art in articles
+        tr.art-meta
+          td 
+            a(href="/blog/articles/article?_id=",target="_blank")=truncate(art.title,20)
+          td=art.category.name
+          td=art.author.name
+          td=art.meta.favoraites ||0
+          td=art.comments.length ||0
+          td=art.published?'已发布':'未发布'
+          td=sd.format(art.created,'YYYY-MM-DD hh-mm-ss')
+          td
+            a(href='/blog/articles/article?_id='+art._id,class="btn btn-sm btn-success",target="_blank") 详情
+            |&nbsp;&nbsp;
+            a(href='/admin/articles/edit?_id='+art._id,class="btn btn-sm btn-info",target="_blank") 编辑
+            |&nbsp;&nbsp;           
+            a(href='/admin/articles/delete?_id='+art._id,class="btn btn-sm btn-danger") 删除
+
+
+    
+  //bootstrap分页        
+  if pageCount > 1    
+    nav.page
+      ul.pagination
+        - var currentPage = 1
+        while currentPage <= pageCount
+          if(currentPage === pageNum)
+            li.active
+              a(href='/admin/articles?page='+currentPage)=currentPage++
+          else
+            li
+              a(href='/admin/articles?page='+currentPage)=currentPage++  

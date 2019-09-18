@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var getArticlesBy = require('../../models/getArticlesBy');
 
 var ga =require('../../models/getArticles'); 
 var sd = require('silly-datetime');  //格式化日期时间
@@ -17,12 +16,20 @@ var truncate = require('truncate');  //截断文本（比如段落等）
   
     //ga.getCategories(getCat);
 
-    //如果访问`/blog/articles`，重定向到`/blog`
-    router.get('/',function(req,res,next){
-        res.redirect('/blog')
+    router.get('/', async function(req, res, next) {
+
+		await ga.getCategories(getCat);
+
+	    //定义渲染文章的方法
+		function getArt(arts,pN,pC){
+            title="我的博客站点";
+		    res.render('blog/home/index',{title:title,articles:arts,pageNum:pN,pageCount:pC,sd:sd,truncate:truncate,categories:categories});
+		}
+
+		await ga.getArticles(req,res,getArt);
     });
 
-    //定义`/articles/category`路由   (注意：路由中必须先加'/')
+    //定义`/articles/category`通过分类获取该分类下文章的路由   (注意：路由中必须先加'/')
 	router.get('/category', async function(req, res, next) {
 		await ga.getCategories(getCat);
 	    //定义渲染分类文章列表的方法
@@ -31,10 +38,10 @@ var truncate = require('truncate');  //截断文本（比如段落等）
 		    res.render('blog/articles/category',{title:name,articles:arts,pageNum:pN,pageCount:pC,sd:sd,truncate:truncate,categories});
 		}
 
-		await getArticlesBy.getArticlesByCategory(req,res,getArt);
+		await ga.getArticlesByCategory(req,res,getArt);
     });
 
-    //定义`/articles/author`路由
+    //定义`/articles/author`通过作者获取该作者笔下文章的路由
 	router.get('/author', async function(req, res, next) {
         await ga.getCategories(getCat);
 
@@ -44,10 +51,10 @@ var truncate = require('truncate');  //截断文本（比如段落等）
 		    res.render('blog/articles/author',{title:name,articles:arts,pageNum:pN,pageCount:pC,sd:sd,truncate:truncate,categories});
 		}
 
-		await getArticlesBy.getArticlesByAuthor(req,res,getArt);
+		await ga.getArticlesByAuthor(req,res,getArt);
     });
 
-    //定义`/articles/article`路由 (文章详情或标题slug跳转)
+    //定义`/articles/article`(文章详情或标题slug跳转)路由 
 	router.get('/article', async function(req, res, next) {
 		await ga.getCategories(getCat);
 	    //定义渲染文章的方法
@@ -64,10 +71,8 @@ var truncate = require('truncate');  //截断文本（比如段落等）
 		await ga.getCategories(getCat);
 	    //定义渲染文章的方法
 		function getArt(art){
-
 		    res.render('blog/articles/article',{art:art,sd,categories});
 		}
-
 		await ga.updateFavoraties(req,res,getArt);
     });
 
@@ -76,10 +81,8 @@ var truncate = require('truncate');  //截断文本（比如段落等）
 		await ga.getCategories(getCat);
 	    //定义渲染文章的方法
 		function getArt(art){
-
 		    res.render('blog/articles/article',{art:art,sd,categories});
 		}
-
 		await ga.updateComments(req,res,getArt);
     });
 

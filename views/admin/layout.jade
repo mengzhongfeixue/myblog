@@ -39,27 +39,23 @@ block main
               block sidebar
                 ul.nav.nav-sidebar
                   li.active
-                    a(href='/admin/posts/list')
+                    a(href='/admin/articles')
                       i.fa.fa-th-list
-                      | &nbsp;文章列表
+                      | &nbsp;&nbsp;所有文章
                       span.sr-only (current)
                   li
-                    a(href='/admin/posts/add') 
-                      i.fa.fa-plus
-                      | &nbsp;添加文章
-                  li
-                    a(href='/admin/categories/list') 
+                    a(href='/admin/articles/categories') 
                       i.fa.fa-th-list
-                      | &nbsp;分类列表
+                      | &nbsp;&nbsp;文章分类
                   li
-                    a(href='/admin/categories/add') 
-                      i.fa.fa-plus
-                      |&nbsp;添加分类
+                    a(href='/admin/articles/users') 
+                      i.fa.fa-list
+                      |&nbsp;&nbsp;用户管理
                 ul.nav.nav-sidebar
                   li
-                    a(href='admin/users/password') 
+                    a(href='admin/users/administrators') 
                       i.fa.fa-wrench
-                      | &nbsp;修改密码
+                      | &nbsp;&nbsp;管理员管理
                   
             .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
               block section

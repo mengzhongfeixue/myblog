@@ -74,6 +74,7 @@ body {
 
 .main {
   padding: 20px;
+  text-align: center;
 }
 @media (min-width: 768px) {
   .main {
@@ -109,4 +110,14 @@ body {
 
 thead{
   font-size: 16px;
+}
+
+
+//文章管理
+.art-manage-title{
+  margin-bottom:30px;
+}
+
+.art-meta{
+  font-size:12px;
 }

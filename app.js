@@ -6,9 +6,8 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var blogRouter = require('./routes/blog');
-var adminRouter = require('./routes/admin');
+var blogRouter = require('./routes/blog/blog');
+var adminRouter = require('./routes/admin/admin');
 
 //var categoryModel = require('./models/category');
 
@@ -28,7 +27,6 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/blog', blogRouter);
 app.use('/admin', adminRouter);
 
