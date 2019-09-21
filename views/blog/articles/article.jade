@@ -7,7 +7,7 @@ block section
  
   div.art
     h3.art-title
-      =art.title
+      =articles[0].title
 
 
     .art-meta
@@ -15,34 +15,34 @@ block section
       span.art-author
         i.fa.fa-user
         |&nbsp;&nbsp;
-        a(href='/blog/articles/author?author='+art.author.name,target="_blank")=art.author.name
+        a(href='/blog/articles/author?author='+articles[0].author.name,target="_blank")=articles[0].author.name
       span.art-category
         i.fa.fa-list
         |&nbsp;&nbsp;
-        a(href='/blog/articles/category?category='+art.category.name,target="_blank")=art.category.name
+        a(href='/blog/articles/category?category='+articles[0].category.name,target="_blank")=articles[0].category.name
       span.art-comment
         i.fa.fa-comment
         |&nbsp;&nbsp;
-        =art.comments.length||0
+        =articles[0].comments.length||0
       span.art-favorate
-        a(href='/blog/articles/article/favorate?_id='+art._id)       
+        a(href='/blog/articles/article/favorate?_id='+articles[0]._id)       
           i.fa.fa-star
         |&nbsp;&nbsp;
-        =art.meta.favoraites||0
+        =articles[0].meta.favoraites||0
       span.art-created
         i.fa.fa-calendar
         |&nbsp;&nbsp;
-        =sd.format(art.created,'YYYY-MM-DD HH:mm')
+        =sd.format(articles[0].created,'YYYY-MM-DD HH:mm')
     
     .art-content
-      =art.content
+      =articles[0].content
 
     .art-comments
       h3 用户评论
 
       div.art-comment-list
-        if art.comments.length
-          each comment in art.comments
+        if articles[0].comments.length
+          each comment in articles[0].comments
             div.art-comment-item
 
               p.art-comment-content=comment.content
@@ -54,7 +54,7 @@ block section
                            
         else
           p.alert.alert-info 还没有评论
-      form.art-comment-form(action='/blog/articles/article/comment/'+art._id,method='post',enctype='application/x-www-form-urlencoded')
+      form.art-comment-form(action='/blog/articles/article/comment/'+articles[0]._id,method='post',enctype='application/x-www-form-urlencoded')
         h4 添加评论
         div.form-group
           input(type='hidden',name='user_id',value='一缕青烟')

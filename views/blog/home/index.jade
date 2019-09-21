@@ -36,10 +36,10 @@ block section
         while currentPage <= pageCount
           if(currentPage === pageNum)
             li.active
-              a(href='/blog?page='+currentPage)=currentPage++
+              a(href='/blog/articles?page='+currentPage)=currentPage++
           else
             li
-              a(href='/blog?page='+currentPage)=currentPage++    
+              a(href='/blog/articles?page='+currentPage)=currentPage++    
 
       
           

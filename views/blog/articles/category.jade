@@ -11,7 +11,7 @@ block section
       .art-content
           =truncate(art.content,150)
       span.art-link
-        a(href="article/"+art._id,target="_blank") 查看全文
+        a(href="/blog/articles/article?_id="+art._id) 查看全文
 
       .art-meta
         span.art-created
@@ -37,10 +37,10 @@ block section
         while currentPage <= pageCount
           if(currentPage === pageNum)
             li.active
-              a(href='category?page='+currentPage)=currentPage++
+              a(href='category?category='+articles[0].category.name+'&page='+currentPage)=currentPage++
           else
             li
-              a(href='category?page='+currentPage)=currentPage++    
+              a(href='category?category='+articles[0].category.name+'&page='+currentPage)=currentPage++    
 
       
           
