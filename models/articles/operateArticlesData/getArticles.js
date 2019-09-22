@@ -1,7 +1,7 @@
 
-const ArticleModel=require('./article.js');
-const CategoryModel = require('./category.js');
-const UserModel = require('./user.js');
+const ArticleModel=require('../articlesModel/article.js');
+const CategoryModel = require('../articlesModel/category.js');
+const AuthorModel = require('../articlesModel/author.js');
 
     //定义拼接Json的方法,用于条件拼接后查询
     function joinJson(...vals){
@@ -44,7 +44,7 @@ const UserModel = require('./user.js');
 
     //定义根据作者获取文章的方法
     function  getArticlesByAuthor(condition={}){
-      let cate=UserModel.findOne(condition).exec()
+      let cate=AuthorModel.findOne(condition).exec()
       return cate.then(author=>{
         return ArticleModel.find({author:author,published:true})
                             .populate('author')
@@ -69,17 +69,6 @@ const UserModel = require('./user.js');
           })
         }
       })
-
-      // let result= art.then(doc=>{
-      //   if(condition.favorate!={}){
-      //     doc.meta.favoraites++;
-      //     return doc.save()           
-      //   }
-      // })
-      // return result.then(isOk=>{
-      //   if(isOk.OK!=0) resolve('点赞成功')
-      //   if(isOk.OK==0) reject('点赞失败')        
-      // })
     }    
   
 
@@ -110,8 +99,35 @@ const UserModel = require('./user.js');
 
     //获取所有作者
     function getAuthors(){
-      return UserModel.find().exec()
-    }    
+      return AuthorModel.find().exec()
+    } 
+
+    //文章排序
+    function sortArticles(condition={}){
+      if(condition.favoraites){
+        let newCon = {}
+        newCon['meta.favoraites']=condition.favoraites
+        return ArticleModel.find()
+                         .populate('category')
+                         .populate('author')
+                         .sort(newCon)
+                         .exec()
+      }
+      // if(condition.comments){
+      //   let newCon = {}
+      //   newCon['comments.length']=condition.comments
+      //   return ArticleModel.find()
+      //                    .populate('category')
+      //                    .populate('author')
+      //                    .sort(newCon)
+      //                    .exec()
+      // }
+      return ArticleModel.find()
+                         .populate('category')
+                         .populate('author')
+                         .sort(condition)
+                         .exec()
+    }   
 
     module.exports={
       getArticles,
@@ -120,5 +136,6 @@ const UserModel = require('./user.js');
       getCategories,
       getAuthors,
       updateFavoraties,
-      updateComments
+      updateComments,
+      sortArticles
     }

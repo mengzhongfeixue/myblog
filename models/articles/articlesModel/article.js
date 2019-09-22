@@ -1,5 +1,5 @@
 // article model
-const mongoose = require('./db.js'),
+const mongoose = require('../../connectDatabase/db.js'),
     Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 

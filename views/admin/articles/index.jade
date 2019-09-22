@@ -3,42 +3,117 @@ extends ../layout
 
 block section
   h2.sub-header.art-manage-title #{title}
+    small.pull-right 
+      !=messages()
   .table-responsive
     table.table.table-bordered.table-hover
       thead.art-manage-th
         tr
-          th(width="30%") 
-            a('/admin/articles/sort?sort_by=title') 标题
+          th(width="30%")
+            if(sortby=='title')
+              if(sortdir==='desc')
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=title&sortdir=asc`)
+                  i.fa.fa-arrow-down
+                  |&nbsp;标题 
+              else
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=title&sortdir=desc`)
+                  i.fa.fa-arrow-up
+                  |&nbsp;标题
+            else
+              a(href=`/admin/articles/sort?page=${pageNum}&sortby=title&sortdir=asc`) 标题
           th 
-            a('/admin/articles/sort?sort_by=category') 分类
+            if(sortby=='category')
+              if(sortdir==='desc')
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=category&sortdir=asc`)
+                  i.fa.fa-arrow-down
+                  |&nbsp;分类 
+              else
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=category&sortdir=desc`)
+                  i.fa.fa-arrow-up
+                  |&nbsp;分类
+            else
+              a(href=`/admin/articles/sort?page=${pageNum}&sortby=category&sortdir=asc`) 分类
           th 
-            a('/admin/articles/sort?sort_by=author') 作者
+            if(sortby=='author')
+              if(sortdir==='desc')
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=author&sortdir=asc`)
+                  i.fa.fa-arrow-down
+                  |&nbsp;作者
+              else
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=author&sortdir=desc`)
+                  i.fa.fa-arrow-up
+                  |&nbsp;作者
+            else
+              a(href=`/admin/articles/sort?page=${pageNum}&sortby=author&sortdir=asc`) 作者
           th 
-            a('/admin/articles/sort?sort_by=favorate') 被赞
+            if(sortby=='favoraites')
+              if(sortdir==='desc')
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=favoraites&sortdir=asc`)
+                  i.fa.fa-arrow-down
+                  |&nbsp;被赞 
+              else
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=favoraites&sortdir=desc`)
+                  i.fa.fa-arrow-up
+                  |&nbsp;被赞
+            else
+              a(href=`/admin/articles/sort?page=${pageNum}&sortby=favoraites&sortdir=asc`) 被赞
           th 
-            a('/admin/articles/sort?sort_by=comments') 评论
+            if(sortby=='comments')
+              if(sortdir==='desc')
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=comments&sortdir=asc`)
+                  i.fa.fa-arrow-down
+                  |&nbsp;评论 
+              else
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=comments&sortdir=desc`)
+                  i.fa.fa-arrow-up
+                  |&nbsp;评论
+            else
+              a(href=`/admin/articles/sort?page=${pageNum}&sortby=comments&sortdir=asc`) 评论
           th 
-            a('/admin/articles/sort?sort_by=published') 状态
+            if(sortby=='published')
+              if(sortdir==='desc')
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=published&sortdir=asc`)
+                  i.fa.fa-arrow-down
+                  |&nbsp;状态 
+              else
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=published&sortdir=desc`)
+                  i.fa.fa-arrow-up
+                  |&nbsp;状态
+            else
+              a(href=`/admin/articles/sort?page=${pageNum}&sortby=published&sortdir=asc`) 状态
           th 
-            a('/admin/articles/sort?sort_by=created') 创建时间
+            if(sortby=='created')
+              if(sortdir==='desc')
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=created&sortdir=asc`)
+                  i.fa.fa-arrow-down
+                  |&nbsp;创建时间 
+              else
+                a(href=`/admin/articles/sort?page=${pageNum}&sortby=created&sortdir=desc`)
+                  i.fa.fa-arrow-up
+                  |&nbsp;创建时间
+            else
+              a(href=`/admin/articles/sort?page=${pageNum}&sortby=created&sortdir=asc`) 创建时间
           th  管理
       tbody
       each art in articles
         tr.art-meta
           td 
-            a(href="/blog/articles/article?_id=",target="_blank")=truncate(art.title,20)
-          td=art.category.name
-          td=art.author.name
+            a(href="/blog/articles/article?slug="+art.slug,target="_blank")=truncate(art.title,20)
+          td 
+            a(href="/blog/articles/category?category="+art.category.name,target="_blank")=art.category.name
+          td 
+            a(href="/blog/articles/author?author="+art.author.name,target="_blank")=art.author.name
           td=art.meta.favoraites ||0
           td=art.comments.length ||0
-          td=art.published?'已发布':'未发布'
+          td 
+            a(href="/blog/articles?published="+art.published,target="_blank")=art.published?'已发布':'未发布'
           td=sd.format(art.created,'YYYY-MM-DD hh-mm-ss')
           td
             a(href='/blog/articles/article?_id='+art._id,class="btn btn-sm btn-success",target="_blank") 详情
             |&nbsp;&nbsp;
             a(href='/admin/articles/edit?_id='+art._id,class="btn btn-sm btn-info",target="_blank") 编辑
             |&nbsp;&nbsp;           
-            a(href='/admin/articles/delete?_id='+art._id,class="btn btn-sm btn-danger") 删除
+            a(href=`/admin/articles/delete?_id=${art._id}&page=${pageNum}&sortby=${sortby}&sortdir=${sortdir}`,class="btn btn-sm btn-danger") 删除
 
 
     
@@ -50,7 +125,7 @@ block section
         while currentPage <= pageCount
           if(currentPage === pageNum)
             li.active
-              a(href='/admin/articles?page='+currentPage)=currentPage++
+              a(href=`/admin/articles/sort?page=${currentPage}&sortby=${sortby}&sortdir=${sortdir}`)=currentPage++
           else
             li
-              a(href='/admin/articles?page='+currentPage)=currentPage++  
+              a(href=`/admin/articles/sort?page=${currentPage}&sortby=${sortby}&sortdir=${sortdir}`)=currentPage++  

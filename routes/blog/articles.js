@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const ga =require('../../models/getArticles'); 
+//const ga =require('../../models/getArticles'); 
+const ga =require('../../models/articles/operateArticlesData/getArticles');
 const sd = require('silly-datetime');  //格式化日期时间
 const truncate = require('truncate');  //截断文本（比如段落等）
 

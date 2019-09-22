@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+const session = require('express-session');
+const connectFlash= require('connect-flash'); //跨对话消息传递
+const messages = require('express-messages');
 
 var indexRouter = require('./routes/index');
 var blogRouter = require('./routes/blog/blog');
@@ -26,6 +29,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+app.use(session({
+  secret: 'blog',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+app.use(connectFlash());
+app.use(function(req,res,next){
+  res.locals.messages=messages(req,res);
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/blog', blogRouter);
 app.use('/admin', adminRouter);
@@ -40,6 +55,8 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+
     
     //此种方式不可取，异步原因可能导致后面使用到categories时，数据库还没查到。
 	// categoryModel.find(function(err,categories){

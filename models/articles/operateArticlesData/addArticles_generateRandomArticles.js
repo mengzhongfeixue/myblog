@@ -1,9 +1,9 @@
 //通过lorem-ipsum第三方插件生成随机的文章内容
 var {loremIpsum} = require('lorem-ipsum'),
     slug = require('slug'), //用于SEO优化
-    UserModel = require('./user'),
-    CategoryModel = require('./category'),
-    ArticleModel = require('./article');
+    UserModel = require('../articlesModel/author'),
+    CategoryModel = require('../articlesModel/category'),
+    ArticleModel = require('../articlesModel/article');
 
 UserModel.findOne(function(err,user){
 	if(err){

@@ -1,6 +1,6 @@
     //连接数据库
 	var mongoose=require('mongoose');
-    var password = require('../password');
+    var password = require('../../password');
 	//useNewUrlParser这个属性会在url里识别验证用户所需的db,未升级前是不需要指定的,升级到要指定，否则报警。
 	mongoose.connect('mongodb+srv://mengfei:'+password+'@cluster0-qbhiu.mongodb.net/blog?retryWrites=true&w=majority',{ useNewUrlParser: true,useUnifiedTopology:true },function(err){
 	        if(err){
