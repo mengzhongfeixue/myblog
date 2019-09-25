@@ -120,4 +120,13 @@ thead{
 
 .art-meta{
   font-size:12px;
+<<<<<<< HEAD
+=======
+}
+.filter{
+  margin:10px 0;
+}
+.filter-cate,.filter-author,.filter-submit{
+  margin:0px 20px;
+>>>>>>> 后端管理基本部分完成
 }

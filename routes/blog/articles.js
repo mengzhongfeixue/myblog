@@ -1,10 +1,15 @@
 const express = require('express');
 const router = express.Router();
+<<<<<<< HEAD
 
 //const ga =require('../../models/getArticles'); 
 const ga =require('../../models/articles/operateArticlesData/getArticles');
 const sd = require('silly-datetime');  //格式化日期时间
 const truncate = require('truncate');  //截断文本（比如段落等）
+=======
+const artsApi =require('../../models/articles');
+const catesApi = require('../../models/categories')
+>>>>>>> 后端管理基本部分完成
 
     //思路：从数据库获取文章 -> 分页 -> 模板渲染页面
 
@@ -26,6 +31,7 @@ const truncate = require('truncate');  //截断文本（比如段落等）
     let categories = [];
     let articles = [];
 
+<<<<<<< HEAD
     //定义公共的从数据库获取文章的方法
     async function getData(req,getArticlesBy){
       //先获取所有分类，下面渲染页面时，用于渲染网页右侧的文章分类
@@ -63,6 +69,8 @@ const truncate = require('truncate');  //截断文本（比如段落等）
         }
       }        
     }
+=======
+>>>>>>> 后端管理基本部分完成
     //定义分页方法
     function paging(arts,pageNum){
       //pageNum = Math.abs(parseInt(req.query.page||1,10));//获取用户点击的页码
@@ -75,23 +83,48 @@ const truncate = require('truncate');  //截断文本（比如段落等）
       })   
     }
 
+<<<<<<< HEAD
     //定义渲染页面的方法
     function render(res,jade,articles,pN=1,pC=1){
       res.render(jade,{title,articles,pageNum:pN,pageCount:pC,sd,truncate,categories});
+=======
+    //定义公共的获取数据后渲染到页面的方法
+    async function render(req,res,jade,getArticlesBy,condition={}){
+      //先获取所有分类，下面渲染页面时，用于渲染网页右侧的文章分类
+      categories= await catesApi.getCategories();
+      //查询数据库找到符合条件的文章
+      await artsApi[getArticlesBy](condition).then(docs=>{
+        let pageNum=Math.abs(parseInt(req.query.page||1,10));
+        return paging(docs,pageNum)
+      }).then(meta=>{
+        res.render(jade,{
+          title,
+          articles:meta.arts,
+          pageNum:meta.pageNum,
+          pageCount:meta.pageCount,
+          categories:categories||[]
+        })
+      })        
+>>>>>>> 后端管理基本部分完成
     }
 
     //配置`/blog/articles`所有文章列表路由  
     router.get('/', function(req,res,next){
+<<<<<<< HEAD
       getData(req,'getArticles').then(docs=>{
         let pageNum=Math.abs(parseInt(req.query.page||1,10));
         return paging(docs,pageNum)
       }).then(meta=>{
         render(res,'blog/home/index',meta.arts,meta.pageNum,meta.pageCount)
       })
+=======
+      render(req,res,'blog/home/index','getArticles',{published:true})
+>>>>>>> 后端管理基本部分完成
     }) 
 
     //定义`/articles/category`通过分类获取该分类下文章的路由   (注意：路由中必须先加'/')
     router.get('/category', function(req,res,next){
+<<<<<<< HEAD
       getData(req,'getArticlesByCategory').then(docs=>{
         let pageNum=Math.abs(parseInt(req.query.page||1,10));
         return paging(docs,pageNum)
@@ -126,6 +159,36 @@ const truncate = require('truncate');  //截断文本（比如段落等）
       getData(req,'updateComments').then(docs=>{
         render(res,'blog/articles/article',docs)
       })
+=======
+      //传入参数预处理
+      let name = req.query.category||'Javascript';        
+      let name_arr=name.trim().toLowerCase().split('');
+      name_arr.splice(0,1,name_arr[0].toUpperCase()); //返回的是被替换后的那个数组元素，不是替换后数组不能链式编程。
+      name= name_arr.join('');
+      render(req,res,'blog/articles/category','getArticlesByCategoryForPublished',{name:name})
+    })
+    //定义`/articles/author`通过作者获取该作者笔下文章的路由
+    router.get('/author', function(req,res,next){
+      //传入参数预处理
+      let name = req.query.author||'admin';        
+      name.trim().toLowerCase(); 
+      render(req,res,'blog/articles/author','getArticlesByAuthorForPublished',{name:name})     
+    })
+    //定义`/articles/article`(文章详情或标题slug跳转)路由
+    router.get('/article', function(req,res,next){
+      render(req,res,'blog/articles/article','getArticles',req.query)     
+    })   
+
+    //处理详情页点赞功能
+    router.get('/article/:favorate', function(req,res,next){
+      let con=joinJson({_id:req.query._id},{favorate:req.params.favorate})
+      render(req,res,'blog/articles/article','updateFavoraties',con)     
+    }) 
+    //添加评论提交表单处理
+    router.post('/article/comment/:_id', function(req,res,next){
+      let con=joinJson({_id:req.params._id},{content:req.body})
+      render(req,res,'blog/articles/article','updateComments',con)     
+>>>>>>> 后端管理基本部分完成
     }) 
 
     

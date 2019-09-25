@@ -9,9 +9,31 @@ block main
     li 链式编程查询数据库，中间查询到的数据在做后续处理(比如分组或分页,改变了查询结果)前如何保存下来呢？这样可以减少查询次数。
     li *查询数据库时，值可以直接用变量，那键作为变量呢？查询字段名是变量，又该怎么查询呢？
       br 
+<<<<<<< HEAD
       答：  let sort={};
             sort[req.params.sortby]=req.query.sortdir;
             return await operation[item](sort);
     li jade中添加事件如何实现？该js block在jade中的位置？
     li admin/articles下表格标题不能居中？
     li mongoose如何根据数组字段的长度排序？
+=======
+      '答： let sort={};
+      |sort[req.params.sortby]=req.query.sortdir;
+      |return await operation[item](sort); '
+    li jade中添加事件如何实现？该js block在jade中的位置？
+    li admin/articles下表格标题不能居中？
+    li mongoose如何根据数组字段的长度排序？
+    li 如何同时根据分类和作者筛找文章，回调地狱里的值如何返回？return不出来，而变量赋值有存在异步问题？而聚合查询不能根据关联字段查询？
+    li 后端筛选后，分页到指定页和删除(或编辑)后返回原页面失效问题？
+    li authorModel曾经用 mongoose.model('User',AuthorSchema);后来改成 mongoose.model('Author',AuthorSchema,'authors');为什么老报错(node:26484) UnhandledPromiseRejectionWarning: MissingSchemaError: Schema hasn't been registered for model "User".  必须把Author改回User才能用。且node_modules全部删了重新下载，仍不行。why?
+    li input属于自闭合标签，无法通过jade赋值？
+    li 删除元素值时，怎么绑定事件让用户确认？及确认后返回值是怎样的？
+
+
+  p 总结：
+  ul
+    li 路由路径一定要以'/'打头，以免出错;渲染路径则不能以'/'打头。
+    li 404错误，多为路由路径错误;
+    li 一直加载，要么网络问题，要么中间件拦截了没有next();
+
+>>>>>>> 后端管理基本部分完成

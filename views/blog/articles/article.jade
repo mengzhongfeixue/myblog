@@ -25,17 +25,28 @@ block section
         |&nbsp;&nbsp;
         =articles[0].comments.length||0
       span.art-favorate
+<<<<<<< HEAD
         a(href='/blog/articles/article/favorate?_id='+articles[0]._id)       
           i.fa.fa-star
         |&nbsp;&nbsp;
         =articles[0].meta.favoraites||0
+=======
+        a(href=`/blog/articles/article/${articles[0].meta.favoraties}?_id=${articles[0]._id}`)       
+          i.fa.fa-star
+        |&nbsp;&nbsp;
+        =articles[0].meta.favoraties||0
+>>>>>>> 后端管理基本部分完成
       span.art-created
         i.fa.fa-calendar
         |&nbsp;&nbsp;
         =sd.format(articles[0].created,'YYYY-MM-DD HH:mm')
     
     .art-content
+<<<<<<< HEAD
       =articles[0].content
+=======
+      !=articles[0].content
+>>>>>>> 后端管理基本部分完成
 
     .art-comments
       h3 用户评论
@@ -44,7 +55,10 @@ block section
         if articles[0].comments.length
           each comment in articles[0].comments
             div.art-comment-item
+<<<<<<< HEAD
 
+=======
+>>>>>>> 后端管理基本部分完成
               p.art-comment-content=comment.content
               div.comment-meta
                 h5.pull-right

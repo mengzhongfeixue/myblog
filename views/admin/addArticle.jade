@@ -1,0 +1,62 @@
+extend ./layout
+
+block section
+  h2.page-header 编辑文章
+  form.form-horizontal(method='post',action=`/admin/articles/edit/${articles[0]._id}`)
+    div.form-group
+      label.col-sm-2.control-label(for='title') * 标题
+      .col-sm-10
+        textarea.form-control(name='title',placeholder='请输入标题...',required) #{articles[0].title||''}
+    div.form-group
+      label.col-sm-2.control-label(for='category') * 分类
+      .col-sm-10
+        select.form-control.input(name='category',required)
+          option(value='') - 选择分类 -
+          each category in categories
+            if(category.name==articles[0].category.name)
+              option(value=category._id,selected=true)=articles[0].category.name
+            else
+              option(value=category._id)=category.name
+    div.form-group
+      label.col-sm-2.control-label(for='author') * 作者
+      .col-sm-10
+        select.form-control.input(name='author',required)
+          option(value='',selected=true) - 选择作者 -
+          each author in authors
+            if(author.name==articles[0].author.name)
+              option(value=author._id,selected=true)=articles[0].author.name
+            else
+              option(value=author._id)=author.name
+    .form-group
+      label(for='content') * 内容
+      textarea#js-article-content.form-control(name='content',required)=articles[0].content||''
+    .form-group
+      lable.col-sm-2.control-label(for='favoraties',required) * 获赞
+      .col-sm-10
+        textarea.form-control(name='meta.favoraties')=articles[0].meta.favoraties||0
+    .h2 评论
+      if articles[0].comments.length
+        each comment in articles[0].comments
+          .form-group
+            label.col-sm-2.control-label(for='comment') #{comment.uid}
+            .col-sm-10
+              textarea.form-control(name='comment')=comment.content||''
+      else
+        .form-group
+          p.alert.alert-info 还没有评论
+    .form-group
+      lable.col-sm-2.control-label(for='published',required) * 发布
+      .col-sm-10
+        select.form-control(name='published',required)
+          if(articles[0].published==false)
+            option(value='false',selected=true) 未发布
+            option(value='true') 未发布
+          else
+            option(value='true',selected=true) 已发布
+            option(value='false') 未发布
+    button.btn.btn-info(type='submit') 保存
+
+block scripts
+  script(src='/javascripts/ckeditor/ckeditor.js')
+  script(src='/javascripts/admin/article.js')
+

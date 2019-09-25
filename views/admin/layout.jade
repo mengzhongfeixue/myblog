@@ -38,11 +38,16 @@ block main
             .col-sm-3.col-md-2.sidebar
               block sidebar
                 ul.nav.nav-sidebar
+<<<<<<< HEAD
                   li.active
+=======
+                  li(class={active:menu=='articles'})
+>>>>>>> 后端管理基本部分完成
                     a(href='/admin/articles')
                       i.fa.fa-th-list
                       | &nbsp;&nbsp;所有文章
                       span.sr-only (current)
+<<<<<<< HEAD
                   li
                     a(href='/admin/articles/categories') 
                       i.fa.fa-th-list
@@ -58,10 +63,28 @@ block main
                 ul.nav.nav-sidebar
                   li
                     a(href='admin/administrators') 
+=======
+                  li(class={active:menu=='categories'})
+                    a(href='/admin/categories') 
+                      i.fa.fa-th-list
+                      | &nbsp;&nbsp;文章分类
+                  li(class={active:menu=='authors'})
+                    a(href='/admin/authors') 
+                      i.fa.fa-list
+                      |&nbsp;&nbsp;文章作者
+                ul.nav.nav-sidebar
+                  li(class={active:menu=='administrator'})
+                    a(href='admin/administrator') 
+>>>>>>> 后端管理基本部分完成
                       i.fa.fa-wrench
                       | &nbsp;&nbsp;管理员管理
                   
             .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
               block section
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 后端管理基本部分完成
  
   

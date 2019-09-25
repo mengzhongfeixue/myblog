@@ -8,6 +8,12 @@ const session = require('express-session');
 const connectFlash= require('connect-flash'); //跨对话消息传递
 const messages = require('express-messages');
 
+<<<<<<< HEAD
+=======
+const sd = require('silly-datetime');  //格式化日期时间的方法的插件
+const truncate = require('truncate');  //截断文本(比如段落等)的方法的插件
+
+>>>>>>> 后端管理基本部分完成
 var indexRouter = require('./routes/index');
 var blogRouter = require('./routes/blog/blog');
 var adminRouter = require('./routes/admin/admin');
@@ -41,10 +47,25 @@ app.use(function(req,res,next){
   next();
 });
 
+<<<<<<< HEAD
+=======
+
+app.use(function(req,res,next){
+  res.locals.sd = sd;
+  res.locals.truncate = truncate;
+  next();
+});
+
+>>>>>>> 后端管理基本部分完成
 app.use('/', indexRouter);
 app.use('/blog', blogRouter);
 app.use('/admin', adminRouter);
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 后端管理基本部分完成
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -57,6 +78,11 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 后端管理基本部分完成
     
     //此种方式不可取，异步原因可能导致后面使用到categories时，数据库还没查到。
 	// categoryModel.find(function(err,categories){

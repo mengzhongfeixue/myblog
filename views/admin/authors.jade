@@ -1,0 +1,70 @@
+extends ./layout
+
+block section
+  h2.sub-header.art-manage-title #{title}
+    small.pull-right 
+      !=messages()
+  form.form-inline(action='/admin/authors/filter',method='post',enctype='application/x-www-form-urlencoded').filter
+    .form-group.filter-cate
+      label 作者:&nbsp;&nbsp;
+      select.form-control(name='_id')
+        option(value='') - 选择作者 -
+        each author in authors
+          option(value=author._id)=author.name
+    button.btn.btn-info.filter-submit 筛选
+  .table-responsive
+    table.table.table-bordered.table-hover
+      thead.art-manage-th
+        tr
+          th 
+            if(sortby=='name')
+              if(sortdir==='desc')
+                a(href=`/admin/authors/sort?page=${pageNum}&sortby=name&sortdir=asc`)
+                  i.fa.fa-arrow-down
+                  |&nbsp;作者 
+              else
+                a(href=`/admin/authors/sort?page=${pageNum}&sortby=name&sortdir=desc`)
+                  i.fa.fa-arrow-up
+                  |&nbsp;作者
+            else
+              a(href=`/admin/authors/sort?page=${pageNum}&sortby=name&sortdir=asc`) 作者
+          th(width='20%') 
+            if(sortby=='created')
+              if(sortdir==='desc')
+                a(href=`/admin/authors/sort?page=${pageNum}&sortby=created&sortdir=asc`)
+                  i.fa.fa-arrow-down
+                  |&nbsp;创建时间 
+              else
+                a(href=`/admin/authors/sort?page=${pageNum}&sortby=created&sortdir=desc`)
+                  i.fa.fa-arrow-up
+                  |&nbsp;创建时间
+            else
+              a(href=`/admin/authors/sort?page=${pageNum}&sortby=created&sortdir=asc`) 创建时间
+          th  管理
+      tbody
+      each cate in cates
+        tr.art-meta
+          td 
+            a(href="/blog/articles/author?author="+cate.name,target="_blank")=cate.name
+          td=sd.format(cate.created,'YYYY-MM-DD hh-mm-ss')
+          td
+            a(href='/admin/authors/add',class="btn btn-sm btn-info",target="_blank") 添加
+            |&nbsp;&nbsp;           
+            a(href=`/admin/authors/delete?_id=${cate._id}&page=${pageNum}&sortby=${sortby}&sortdir=${sortdir}`,class="btn btn-sm btn-danger") 删除
+
+
+    
+  //bootstrap分页        
+  if pageCount > 1    
+    nav.page
+      ul.pagination
+        - var currentPage = 1
+        while currentPage <= pageCount
+          if(currentPage === pageNum)
+            li.active
+              a(href=`/admin/authors/sort?page=${currentPage}&sortby=${sortby}&sortdir=${sortdir}`)=currentPage++
+          else
+            li
+              a(href=`/admin/authors/sort?page=${currentPage}&sortby=${sortby}&sortdir=${sortdir}`)=currentPage++  
+
+

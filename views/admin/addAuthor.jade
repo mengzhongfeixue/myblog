@@ -1,0 +1,14 @@
+extend ./layout
+
+block section
+  h2.page-header 添加作者
+  form.form-horizontal(method='post',action=`/admin/authors/add`)
+    div.form-group
+      label.col-sm-2.control-label(for='name') * 作者
+      .col-sm-10
+        textarea.form-control(name='name',placeholder='请输入作者...',required) 
+    
+    button.btn.btn-info(type='submit') 保存
+
+
+
