@@ -2,11 +2,7 @@ extends ../home/article
 
 block section
   h2.page-header
-<<<<<<< HEAD
-    =title
-=======
     =articles[0].author.name
->>>>>>> 后端管理基本部分完成
     |&nbsp;笔下的所有文章列表
   each art in articles
     div.art
@@ -15,11 +11,7 @@ block section
       .art-content
           =truncate(art.content,150)
       span.art-link
-<<<<<<< HEAD
-        a(href="/blog/articles/article?_id="+art._id) 查看全文
-=======
         a(href="/blog/articles/article?_id="+art._id,target='_blank') 查看全文
->>>>>>> 后端管理基本部分完成
 
       .art-meta
         span.art-created
@@ -36,11 +28,7 @@ block section
           =art.comments.length||0
         span.art-created
           |赞：&nbsp;
-<<<<<<< HEAD
-          =art.meta.favoraites||0
-=======
           =art.meta.favoraties||0
->>>>>>> 后端管理基本部分完成
   //bootstrap分页        
   if pageCount > 1    
     nav.page

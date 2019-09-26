@@ -15,7 +15,7 @@
 	}
 	//获取作者
 	function getAuthors(condition={}){
-		return AuthorModel.find(condition).sort({'created':-1}).exec()
+		return AuthorModel.find(condition).sort({'created':'asc'}).exec()
 	}
 	//删除作者
 	function deleteAuthor(condition={}){
@@ -25,11 +25,17 @@
 	function updateAuthor(condition={},data={}){
 		return AuthorModel.updateOne(condition,data).exec()
 	}
+    //作者排序
+	function sortAuthors(condition){
+		console.log(condition)
+		return AuthorModel.find().sort(condition).exec() 
+	}
 
 	module.exports={
 		AuthorModel,
 		addAuthor,
 		deleteAuthor,
 		updateAuthor,
-		getAuthors
+		getAuthors,
+		sortAuthors
 	}

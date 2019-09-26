@@ -58,6 +58,9 @@ const router = express.Router();
       render(req,res,'admin/categories')
     })       
     router.post('/filter',async function(req,res,next){
+      if(req.body._id==''){
+        delete req.body['_id']
+      }
       render(req,res,'admin/categories','getCategories',req.body)
     })
     router.get('/sort',function(req,res,next){

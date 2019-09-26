@@ -27,7 +27,7 @@ block section
                   i.fa.fa-arrow-up
                   |&nbsp;分类
             else
-              a(href=`/admin/categories/sort?page=${pageNum}&sortby=name&sortdir=asc`) 分类
+              a(href=`/admin/categories/sort?page=${pageNum}&sortby=name&sortdir=desc`) 分类
           th(width='20%') 
             if(sortby=='created')
               if(sortdir==='desc')
@@ -39,7 +39,7 @@ block section
                   i.fa.fa-arrow-up
                   |&nbsp;创建时间
             else
-              a(href=`/admin/categories/sort?page=${pageNum}&sortby=created&sortdir=asc`) 创建时间
+              a(href=`/admin/categories/sort?page=${pageNum}&sortby=created&sortdir=desc`) 创建时间
           th  管理
       tbody
       each cate in cates

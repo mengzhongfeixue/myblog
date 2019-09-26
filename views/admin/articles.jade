@@ -34,7 +34,7 @@ block section
                   i.fa.fa-arrow-up
                   |&nbsp;标题
             else
-              a(href=`/admin/articles/sort?page=${pageNum}&sortby=title&sortdir=asc`) 标题
+              a(href=`/admin/articles/sort?page=${pageNum}&sortby=title&sortdir=desc`) 标题
           th 
             if(sortby=='category')
               if(sortdir==='desc')
@@ -46,7 +46,7 @@ block section
                   i.fa.fa-arrow-up
                   |&nbsp;分类
             else
-              a(href=`/admin/articles/sort?page=${pageNum}&sortby=category&sortdir=asc`) 分类
+              a(href=`/admin/articles/sort?page=${pageNum}&sortby=category&sortdir=desc`) 分类
           th 
             if(sortby=='author')
               if(sortdir==='desc')
@@ -106,7 +106,7 @@ block section
                   i.fa.fa-arrow-up
                   |&nbsp;创建时间
             else
-              a(href=`/admin/articles/sort?page=${pageNum}&sortby=created&sortdir=asc`) 创建时间
+              a(href=`/admin/articles/sort?page=${pageNum}&sortby=created&sortdir=desc`) 创建时间
           th  管理
       tbody
       each art in articles

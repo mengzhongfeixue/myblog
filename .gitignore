@@ -15,8 +15,4 @@ node_modules
 *.log
 
 password.js
-<<<<<<< HEAD
-=======
-
 public/javascripts/ckeditor
->>>>>>> 后端管理基本部分完成

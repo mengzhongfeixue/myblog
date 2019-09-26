@@ -5,7 +5,7 @@ block section
     small.pull-right 
       !=messages()
   form.form-inline(action='/admin/authors/filter',method='post',enctype='application/x-www-form-urlencoded').filter
-    .form-group.filter-cate
+    .form-group.filter-author
       label 作者:&nbsp;&nbsp;
       select.form-control(name='_id')
         option(value='') - 选择作者 -
@@ -27,8 +27,32 @@ block section
                   i.fa.fa-arrow-up
                   |&nbsp;作者
             else
-              a(href=`/admin/authors/sort?page=${pageNum}&sortby=name&sortdir=asc`) 作者
-          th(width='20%') 
+              a(href=`/admin/authors/sort?page=${pageNum}&sortby=name&sortdir=desc`) 作者
+          th 
+            if(sortby=='email')
+              if(sortdir==='desc')
+                a(href=`/admin/authors/sort?page=${pageNum}&sortby=email&sortdir=asc`)
+                  i.fa.fa-arrow-down
+                  |&nbsp;邮箱 
+              else
+                a(href=`/admin/authors/sort?page=${pageNum}&sortby=email&sortdir=desc`)
+                  i.fa.fa-arrow-up
+                  |&nbsp;邮箱
+            else
+              a(href=`/admin/authors/sort?page=${pageNum}&sortby=email&sortdir=desc`) 邮箱
+          th 
+            if(sortby=='password')
+              if(sortdir==='desc')
+                a(href=`/admin/authors/sort?page=${pageNum}&sortby=password&sortdir=asc`)
+                  i.fa.fa-arrow-down
+                  |&nbsp;密码 
+              else
+                a(href=`/admin/authors/sort?page=${pageNum}&sortby=password&sortdir=desc`)
+                  i.fa.fa-arrow-up
+                  |&nbsp;密码
+            else
+              a(href=`/admin/authors/sort?page=${pageNum}&sortby=password&sortdir=desc`) 密码
+          th
             if(sortby=='created')
               if(sortdir==='desc')
                 a(href=`/admin/authors/sort?page=${pageNum}&sortby=created&sortdir=asc`)
@@ -39,18 +63,20 @@ block section
                   i.fa.fa-arrow-up
                   |&nbsp;创建时间
             else
-              a(href=`/admin/authors/sort?page=${pageNum}&sortby=created&sortdir=asc`) 创建时间
+              a(href=`/admin/authors/sort?page=${pageNum}&sortby=created&sortdir=desc`) 创建时间
           th  管理
       tbody
-      each cate in cates
+      each au in auths
         tr.art-meta
           td 
-            a(href="/blog/articles/author?author="+cate.name,target="_blank")=cate.name
-          td=sd.format(cate.created,'YYYY-MM-DD hh-mm-ss')
+            a(href="/blog/articles/author?author="+au.name,target="_blank")=au.name
+          td=au.email
+          td=au.password
+          td=sd.format(au.created,'YYYY-MM-DD hh-mm-ss')
           td
             a(href='/admin/authors/add',class="btn btn-sm btn-info",target="_blank") 添加
             |&nbsp;&nbsp;           
-            a(href=`/admin/authors/delete?_id=${cate._id}&page=${pageNum}&sortby=${sortby}&sortdir=${sortdir}`,class="btn btn-sm btn-danger") 删除
+            a(href=`/admin/authors/delete?_id=${au._id}&page=${pageNum}&sortby=${sortby}&sortdir=${sortdir}`,class="btn btn-sm btn-danger") 删除
 
 
     
