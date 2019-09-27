@@ -140,6 +140,12 @@ const authorsApi = require('../../models/authors');
         res.redirect(`/admin/articles/sort?page=${req.query.page}&sortby=${req.query.sortby}&sortdir=${req.query.sortdir}`)
       })
     })          
-
+    
+    //搜索文章
+    router.post('/search',function(req,res,next){
+      let search = {};
+      search.title=new RegExp(req.body.keyword.trim(),'i');
+      render(req,res,'admin/articles','getArticles',search)
+    })
     
     module.exports = router;  
