@@ -1,12 +1,14 @@
 extend ./layout
 
 block section
-  h2.page-header 添加分类
-  form.form-horizontal(method='post',action=`/admin/categories/add`)
+  h2.page-header=edit?'编辑分类':'添加分类'
+    small.pull-right#massages-tips 
+      !=messages()
+  form.form-horizontal(method='post',action=edit?`/admin/categories/edit/${category._id}`:`/admin/categories/add`)
     div.form-group
       label.col-sm-2.control-label(for='name') * 类名
       .col-sm-10
-        textarea.form-control(name='name',placeholder='请输入类名...',required) 
+        textarea.form-control(name='name',placeholder='请输入类名...',required)=edit?category.name:'' 
     
     button.btn.btn-info(type='submit') 保存
 

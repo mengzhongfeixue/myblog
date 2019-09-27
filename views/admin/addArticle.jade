@@ -2,6 +2,8 @@ extend ./layout
 
 block section
   h2.page-header 编辑文章
+    small.pull-right#massages-tips 
+      !=messages()
   form.form-horizontal(method='post',action=`/admin/articles/edit/${articles[0]._id}`)
     div.form-group
       label.col-sm-2.control-label(for='title') * 标题

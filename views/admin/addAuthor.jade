@@ -2,6 +2,8 @@ extend ./layout
 
 block section
   h2.page-header 添加作者
+    small.pull-right#massages-tips 
+      !=messages()
   form.form-horizontal(method='post',action=`/admin/authors/add`)
     div.form-group
       label.col-sm-2.control-label(for='name') * 作者

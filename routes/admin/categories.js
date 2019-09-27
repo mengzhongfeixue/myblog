@@ -72,20 +72,18 @@ const router = express.Router();
     //点击编辑
     router.get('/edit', function(req,res,next){
       catesApi.getCategories(req.query).then(cates=>{
-        res.render('admin/addCategory',{category:cates[0]})
+        res.render('admin/addCategory',{edit:'edit',category:cates[0]})
       })      
       
     })
     //编辑页提交
     router.post('/edit/:_id',function(req,res,next){
-      //console.log(req.params,req.body)
-      artsApi.updateArticle(req.params,req.body,isUpdated=>{
-        if(isUpdated=='ok'){
+      catesApi.updateCategory(req.params,req.body).then(isUpdated=>{
+        if(isUpdated.ok==1){
           req.flash('success','分类修改成功!');
-          res.redirect(`/admin/articles`)
+          res.redirect(`/admin/categories`)
         }else{
           req.flash('failed','分类修改失败!');
-          res.redirect(`/admin/categories/edit?page=${req.params.page}`)
         }
       })
     })

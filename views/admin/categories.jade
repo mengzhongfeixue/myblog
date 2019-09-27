@@ -2,7 +2,7 @@ extends ./layout
 
 block section
   h2.sub-header.art-manage-title #{title}
-    small.pull-right 
+    small.pull-right#massages-tips 
       !=messages()
   form.form-inline(action='/admin/categories/filter',method='post',enctype='application/x-www-form-urlencoded').filter
     .form-group.filter-cate
@@ -48,6 +48,8 @@ block section
             a(href="/blog/articles/category?category="+cate.name,target="_blank")=cate.name
           td=sd.format(cate.created,'YYYY-MM-DD hh-mm-ss')
           td
+            a(href='/admin/categories/edit?_id='+cate.id,class="btn btn-sm btn-info",target="_blank") 编辑
+            |&nbsp;&nbsp;
             a(href='/admin/categories/add',class="btn btn-sm btn-info",target="_blank") 添加
             |&nbsp;&nbsp;           
             a(href=`/admin/categories/delete?_id=${cate._id}&page=${pageNum}&sortby=${sortby}&sortdir=${sortdir}`,class="btn btn-sm btn-danger") 删除

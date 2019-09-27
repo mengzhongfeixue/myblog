@@ -18,8 +18,9 @@ block main
     li 如何同时根据分类和作者筛找文章，回调地狱里的值如何返回？return不出来，而变量赋值有存在异步问题？而聚合查询不能根据关联字段查询？
     li 后端筛选后，分页到指定页和删除(或编辑)后返回原页面失效问题？
     li authorModel曾经用 mongoose.model('User',AuthorSchema);后来改成 mongoose.model('Author',AuthorSchema,'authors');为什么老报错(node:26484) UnhandledPromiseRejectionWarning: MissingSchemaError: Schema hasn't been registered for model "User".  必须把Author改回User才能用。且node_modules全部删了重新下载，仍不行。why?
-    li input属于自闭合标签，无法通过jade赋值？
+    li input属于自闭合标签，无法通过jade赋值？通过value=article.title
     li 删除元素值时，怎么绑定事件让用户确认？及确认后返回值是怎样的？
+    li jade中通过':'来条件加类，如：li(class={active:menu=='authors'})
 
 
   p 总结：

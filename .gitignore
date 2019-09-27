@@ -14,5 +14,7 @@ node_modules
 #忽略日志文件
 *.log
 
+#滤除本地数据库密码配置文件
 password.js
+#滤除本地的富文本编辑器ckeditor，改用bootcdn,减少远程库空间占用。或改用package.json记录下。
 public/javascripts/ckeditor

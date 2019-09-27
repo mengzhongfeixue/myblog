@@ -14,11 +14,13 @@
     "express": "~4.16.1",
     "express-messages": "^1.0.1",
     "express-session": "^1.16.2",
+    "express-validator": "^6.2.0",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "lorem-ipsum": "^2.0.3",
     "mongoose": "^5.7.1",
     "morgan": "~1.9.1",
+    "pinyin": "^2.9.0",
     "silly-datetime": "^0.1.2",
     "slug": "^1.1.0",
     "truncate": "^2.1.0"

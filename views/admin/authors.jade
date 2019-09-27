@@ -2,7 +2,7 @@ extends ./layout
 
 block section
   h2.sub-header.art-manage-title #{title}
-    small.pull-right 
+    small.pull-right#massages-tips 
       !=messages()
   form.form-inline(action='/admin/authors/filter',method='post',enctype='application/x-www-form-urlencoded').filter
     .form-group.filter-author
