@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-  const authorsApi =require('../../models/authors'); 
+const authorsApi =require('../../models/authors'); 
+const { check, validationResult } = require('express-validator');
+
 
     //思路：从数据库获取文章 -> 分页 -> 模板渲染页面
 
@@ -72,22 +74,30 @@ const router = express.Router();
     //点击编辑
     router.get('/edit', function(req,res,next){
       authorsApi.getAuthors(req.query).then(authors=>{
-        res.render('admin/addAuthor',{author:authors[0]})
+        res.render('admin/addAuthor',{edit:'edit',author:authors[0]})
       })      
       
     })
     //编辑页提交
-    router.post('/edit/:_id',function(req,res,next){
-      //console.log(req.params,req.body)
-      authorsApi.updateAuthor(req.params,req.body,isUpdated=>{
-        if(isUpdated=='ok'){
-          req.flash('success','作者修改成功!');
-          res.redirect(`/admin/articles`)
-        }else{
-          req.flash('failed','作者修改失败!');
-          res.redirect(`/admin/authors/edit?page=${req.params.page}`)
-        }
-      })
+    router.post('/edit/:_id', [
+      // username must be an email
+      check('email').isEmail().withMessage('请输入正确的邮箱'),
+      // password must be at least 5 chars long
+      check('password').isLength({ min: 6,max:15 }).withMessage('密码必须是六至十五位数字或字母')
+    ], function(req,res,next){
+      const errors = validationResult(req);
+      if(!errors.isEmpty()){
+        res.render('admin/addAuthor',{errors:errors.errors})
+      }else{
+        authorsApi.updateAuthor(req.params,req.body).then(isUpdated=>{
+          if(isUpdated.ok==1){
+            req.flash('success','作者修改成功!');
+            res.redirect(`/admin/authors`)
+          }else{
+            req.flash('failed','作者修改失败!');
+          }
+        })
+      }
     })
     //删除作者
     router.get('/delete',function(req,res,next){
@@ -109,16 +119,30 @@ const router = express.Router();
     }) 
     
     //添加作者
-    router.post('/add',function(req,res,next){
-      authorsApi.addAuthor(req.body).then(isSaved=>{
-        if(isSaved.ok=1){
-          req.flash('success','作者添加成功!');
-          res.redirect('/admin/authors')
-        }else{
-          req.flash('field','作者添加失败!');
-          res.render('admin/addAuthor')
-        }
-      })
+    router.post('/add', [
+      // username must be an email
+      check('email').isEmail().withMessage('请输入正确的邮箱'),
+      // password must be at least 5 chars long
+      check('password').isLength({ min: 6,max:15 }).withMessage('密码必须是六至十五位数字或字母')
+    ], function(req,res,next){
+
+      // Finds the validation errors in this request and wraps them in an object with handy functions
+      const errors = validationResult(req);
+      if(!errors.isEmpty()){
+        res.render('admin/addAuthor',{errors:errors.errors})
+      }else{
+        authorsApi.addAuthor(req.body).then(isSaved=>{
+          if(isSaved.ok=1){
+            req.flash('success','作者添加成功!');
+            res.redirect('/admin/authors')
+          }else{
+            req.flash('faild','作者添加失败！');
+            res.render('admin/addAuthor')
+          }
+        })
+      }
+
+
       
     })
 

@@ -75,7 +75,9 @@ block section
           td=sd.format(au.created,'YYYY-MM-DD hh-mm-ss')
           td
             a(href='/admin/authors/add',class="btn btn-sm btn-info",target="_blank") 添加
-            |&nbsp;&nbsp;           
+            |&nbsp;&nbsp; 
+            a(href='/admin/authors/edit',class="btn btn-sm btn-success",target="_blank") 编辑
+            |&nbsp;&nbsp;          
             a(href=`/admin/authors/delete?_id=${au._id}&page=${pageNum}&sortby=${sortby}&sortdir=${sortdir}`,class="btn btn-sm btn-danger") 删除
 
 

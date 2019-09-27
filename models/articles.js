@@ -4,7 +4,7 @@
         authorsApi = require('./authors'),
         Schema = mongoose.Schema,
         ObjectId = Schema.ObjectId;
-
+    const pinyin = require('pinyin');
     let ArticleSchema = new mongoose.Schema({
     	title:{type: String, required: true},
     	content:{type: String, required: true},
@@ -147,13 +147,23 @@
           }else if(Boolean(newData.comment)!=false){
             doc['comments'][0]['content']=newData.comment
           }
+        
+          //支持中文slug别名
+          let slug =pinyin(newData.title,{
+            style:pinyin.STYLE_NORMAL,
+            heteronym:false
+          }).map(function(item){
+            return item[0];
+          }).join('-');
 
           doc.title=newData.title;
+          doc.slug=slug;
           doc.category=newData.category;
           doc.author=newData.author;
           doc.content=newData.content;
           doc.meta.favoraties=newData['meta.favoraties'];
           doc.published=newData.published;
+          doc.created=new Date();
           doc.markModified('comments');
           doc.markModified('meta');
           doc.save(function(err,doc){

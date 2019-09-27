@@ -1,6 +1,7 @@
 	//Categories API
 	var mongoose = require('./db.js');
     const slug = require('slug');
+    const pinyin = require('pinyin');
 	var CategorySchema = new mongoose.Schema({
 		name:{type: String, required: true},
 		slug:{type: String, required: true},
@@ -12,7 +13,13 @@
     const ArticleModel = artsApi.ArticleModel;	
 	//增加分类
 	function addCategory(doc={}){
-        let name_slug = slug(doc.name);
+        let title =pinyin(doc.name,{
+        	style:pinyin.STYLE_NORMAL,
+        	heteronym:false
+        }).map(function(item){
+        	return item[0];
+        }).join(' ');
+        let name_slug = slug(title);
         let cate = {};
         cate['name']=doc.name;
         cate['slug']=name_slug;
@@ -29,7 +36,18 @@
 	}
 	//修改分类
 	function updateCategory(condition={},data={}){
-		return CategoryModel.updateOne(condition,data).exec()
+		let title =pinyin(data.name,{
+        	style:pinyin.STYLE_NORMAL,
+        	heteronym:false
+        }).map(function(item){
+        	return item[0];
+        }).join(' ');
+        let name_slug = slug(title);
+        let cate = {};
+        cate['name']=data.name;
+        cate['slug']=name_slug;
+        cate['created']=new Date();
+		return CategoryModel.updateOne(condition,cate).exec()
 	}
 
     //分类排序

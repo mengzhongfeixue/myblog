@@ -1,22 +1,26 @@
 extend ./layout
 
 block section
-  h2.page-header 添加作者
+  h2.page-header=edit?'编辑作者':'添加作者'
     small.pull-right#massages-tips 
       !=messages()
-  form.form-horizontal(method='post',action=`/admin/authors/add`)
+  if errors&&errors.length
+    div.errors
+      each error in errors
+        p.alert.alert-danger=error.msg
+  form.form-horizontal(method='post',action=edit?`/admin/authors/edit/${author._id}`:`/admin/authors/add`,autocomplete='on')
     div.form-group
       label.col-sm-2.control-label(for='name') * 作者
       .col-sm-10
-        textarea.form-control(name='name',placeholder='请输入作者...',required) 
+        input.form-control(name='name',placeholder='请输入作者...',required,value=edit?author.name:'') 
     div.form-group
       label.col-sm-2.control-label(for='email') * 邮箱
       .col-sm-10
-        textarea.form-control(name='email',placeholder='请输入邮箱...',required)
+        input.form-control(name='email',placeholder='请输入邮箱...',required,value=edit?author.email:'')
     div.form-group
       label.col-sm-2.control-label(for='password') * 密码
       .col-sm-10
-        textarea.form-control(name='password',placeholder='请输入密码...',required)
+        input.form-control(name='password',placeholder='请输入密码...',required,value=edit?author.password:'')
 
     
     button.btn.btn-info(type='submit') 保存

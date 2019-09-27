@@ -8,8 +8,7 @@ block section
     div.form-group
       label.col-sm-2.control-label(for='name') * 类名
       .col-sm-10
-        textarea.form-control(name='name',placeholder='请输入类名...',required)=edit?category.name:'' 
-    
+        input.form-control(name='name',placeholder='请输入类名...',required,value=edit?category.name:'')     
     button.btn.btn-info(type='submit') 保存
 
 

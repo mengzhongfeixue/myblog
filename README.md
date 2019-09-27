@@ -14,6 +14,7 @@
 * ckeditor 富文本编辑器插件
 * pinyin 汉字拼音转换工具，可用于汉语标题转化为slug
 * express-validator 后端验证工具(自定义验证规则的中间件)
+* jqueryvalidation 前端表单验证插件，由于HTML5做了很多验证的工作，不支持HTML5的地方可以用此插件。
 
 ## 使用说明
 * 主流开源协议之间有何异同？

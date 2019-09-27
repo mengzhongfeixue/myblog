@@ -8,7 +8,7 @@ block section
     div.form-group
       label.col-sm-2.control-label(for='title') * 标题
       .col-sm-10
-        textarea.form-control(name='title',placeholder='请输入标题...',required) #{articles[0].title||''}
+        input.form-control(name='title',placeholder='请输入标题...',required,value= articles[0].title||'')
     div.form-group
       label.col-sm-2.control-label(for='category') * 分类
       .col-sm-10
@@ -35,7 +35,7 @@ block section
     .form-group
       lable.col-sm-2.control-label(for='favoraties',required) * 获赞
       .col-sm-10
-        textarea.form-control(name='meta.favoraties')=articles[0].meta.favoraties||0
+        input.form-control(name='meta.favoraties',value=articles[0].meta.favoraties||0)
     .h2 评论
       if articles[0].comments.length
         each comment in articles[0].comments
