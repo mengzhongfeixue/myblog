@@ -1,0 +1,22 @@
+
+extends layout
+
+block main
+  form.form_login(action='/users/login',method='post')
+    h1 登录表单
+    !=messages()
+    if errors&&errors.length
+      div.errors
+        each error in errors
+          p.alert.alert-danger=error.msg
+    .form_item
+      label(for='email') 邮箱：
+      input(type='text', name='email', placeholder='请输入邮箱', required='')
+    .form_item
+      label(for='password') 密码：
+      input(type='password', name='password', placeholder='请输入密码名', required='')
+    .form_item
+      input(type='submit', value='登录')
+    .info
+      | 没有账号？
+      a.login-switch(href='/users/register') 注册

@@ -7,13 +7,14 @@ var bodyParser = require('body-parser');
 const session = require('express-session');
 const connectFlash= require('connect-flash'); //跨对话消息传递
 const messages = require('express-messages');
-
+const passport = require('passport');
 const sd = require('silly-datetime');  //格式化日期时间的方法的插件
 const truncate = require('truncate');  //截断文本(比如段落等)的方法的插件
 
 var indexRouter = require('./routes/index');
 var blogRouter = require('./routes/blog/blog');
 var adminRouter = require('./routes/admin/admin');
+const usersRouter = require('./routes/users/users');
 
 //var categoryModel = require('./models/category');
 
@@ -39,6 +40,8 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false }
 }));
+//app.use(passport.initialize());
+//app.use(passport.session());
 app.use(connectFlash());
 app.use(function(req,res,next){
   res.locals.messages=messages(req,res);
@@ -53,6 +56,7 @@ app.use(function(req,res,next){
 });
 
 app.use('/', indexRouter);
+app.use('/users',usersRouter);
 app.use('/blog', blogRouter);
 app.use('/admin', adminRouter);
 

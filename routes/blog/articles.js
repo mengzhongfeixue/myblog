@@ -90,6 +90,12 @@ const catesApi = require('../../models/categories')
       let con=joinJson({_id:req.params._id},{content:req.body})
       render(req,res,'blog/articles/article','updateComments',con)     
     }) 
+    //搜索文章
+    router.post('/search',function(req,res,next){
+      let search = {};
+      search.title=new RegExp(req.body.keyword.trim(),'i');
+      render(req,res,'blog/home/index','getArticles',joinJson(search,{published:true}))
+    })
 
     
     module.exports = router;  

@@ -3,7 +3,7 @@
     const slug = require('slug');
     const pinyin = require('pinyin');
 	var CategorySchema = new mongoose.Schema({
-		name:{type: String, required: true},
+		name:{type: String, required: true,unique:true},
 		slug:{type: String, required: true},
 		created:{type: Date}
 	});

@@ -1,0 +1,33 @@
+extends layout
+block main
+  form.form_register(action='/users/register',method='post')
+    h1 注册表单
+    !=messages()
+    if errors&&errors.length
+      div.errors
+        each error in errors
+          p.alert.alert-danger=error.msg
+    .form_item
+      label(for='username') 用户名：
+      input(type='text', name='username', placeholder='请输入用户名', required='')
+    .form_item
+      label(for='password') 密码：
+      input(type='password', name='password', placeholder='请输入密码', required='')
+    .form_item
+      label(for='password') 确认密码：
+      input(type='password', name='confirmPassword', placeholder='请再次输入密码', required='')
+    .form_item
+      label(for='email') 电子邮箱：
+      input#email(type='email', name='email', placeholder='请输入电子邮件', required='')
+    .form_item
+      label(for='tel') 电话：
+      input#tel(type='tel', name='tel', placeholder='请输入手机号码',disabled='')
+    .form_item
+      label(for='massage') 短信验证 :
+      input(type='text', name='massage',disabled='')
+      input.btn(type='button', value='获取验证码',disabled='')
+    .form_item
+      input(type='submit', value='注册')
+    .info
+      | 已有账号？
+      a.login-switch(href='/users/login') 登录
