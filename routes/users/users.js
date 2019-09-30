@@ -4,8 +4,7 @@
     const authorsApi = require('../../models/authors');
     const { check, validationResult } = require('express-validator');
     const md5=require('md5');
-    const passportConfig = require('./passport_config');
-    passportConfig.init()
+    const passport = require('passport');
     //如果访问`/blog`，重定向到`/blog/articles`
     router.get('/',function(req,res,next){
         res.redirect('/users/login')
@@ -13,27 +12,26 @@
     router.get('/login',function(req,res,next){
         res.render('users/login')
     })
-    router.post('/login',[
-      check('email').isEmail().withMessage('请输入正确的邮箱'),
-      check('password').isLength({ min: 6,max:15 }).withMessage('密码必须是六至十五位数字或字母')
-    ],function(req,res,next){
-      const errors = validationResult(req);
-      if(!errors.isEmpty()){
-        res.render('users/login',{errors:errors.errors})
-      }else{
-        let author={};
-        author.email=req.body.email.trim();
-        author.password=md5(req.body.password.trim());
-        authorsApi.getAuthors(author).then(authors=>{
-          if(authors.length==0){
-            req.flash('faild','用户名或密码错误!');
-            res.render('users/login')
-          }else{
-            res.redirect('/blog/articles')          
-          }
-        })        
-      }
+    // router.post('/login',[
+    //   check('email').isEmail().withMessage('请输入正确的邮箱'),
+    //   check('password').isLength({ min: 6,max:15 }).withMessage('密码必须是六至十五位数字或字母')
+    // ],function(req,res,next){
+    //   const errors = validationResult(req);
+    //   if(!errors.isEmpty()){
+    //     res.render('users/login',{errors:errors.errors})
+    //   }else{
+    //     passport.authenticate('local', { failureRedirect: '/admin/users/login' });
+    //     res.redirect('/blog/articles')
+    //   }
+    // })
+
+    router.post('/login',
+      passport.authenticate('local', { failureRedirect: '/users/login' }),
+      function(req,res,next){
+        res.redirect('/blog/articles')           
     })
+
+
     router.get('/register',function(req,res,next){
         res.render('users/register')
     })

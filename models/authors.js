@@ -34,10 +34,10 @@
 	}
 
 	//登录验证
-    // AuthorSchema.methods.verifyPassword = function(password){
-    // 	console.log('password,Schema.password,isMatched:',password,AuthorSchema.password,isMatched)
-    // 	return md5(password) === this.password;
-    // }
+    AuthorModel.prototype.verifyPassword = function(password){
+    	//console.log('password,AuthorModel.password,isMatched:',password,this.password,md5(password) == this.password)
+    	return md5(password) === this.password;
+    }
 
 	module.exports={
 		AuthorModel,
