@@ -74,7 +74,17 @@
       }
     })
     router.get('/logout',function(req,res,next){
+        req.logout();
         res.redirect('/blog/articles');
     })
+
+    router.requireLogin=function(req,res,next){
+      if(req.user){
+        next();
+      }else{
+        res.redirect('/users/login');
+        //next(new Error('登录用户才有权访问'));
+      }
+    }
 
     module.exports = router;

@@ -11,8 +11,22 @@ block main
           a.blog-nav-item(href='/blog/community',class={active:menu=='community'}) 社区
           a.blog-nav-item(href='/blog/rank',class={active:menu=='rank'}) 排行榜
           a.blog-nav-item(href='/blog/about',class={active:menu=='about'}) 关于
+          ul.nav.navbar-nav.navbar-right
+            if user
+              li
+                a=user.name
+              li
+                a(href='/users/logout')
+                  i.fa.fa-unlock-alt
+                  | &nbsp;注销
+            else
+              li
+                a(href='/users/login')
+                  i.fa.fa-lock-alt
+                  | &nbsp;登录
           form.navbar-form.navbar-right(method='post',action='/blog/articles/search')
             input.form-control(type='text',name='keyword' placeholder='请输入文章标题...')
+
 
   block content
     
@@ -20,11 +34,11 @@ block main
     footer.blog-footer
       p
         Blog  built by  
-        a(href='http://mengfei@github.com')&nbsp;mengfei
+        |a(href='http://mengfei@github.com')&nbsp;mengfei
         |@2018.6.4 
       p
         a(href='#top') 返回顶部
-        &nbsp;&nbsp;&nbsp;&nbsp;
+        |&nbsp;&nbsp;&nbsp;&nbsp;
         a(href='/users/login') 用户登录
-        &nbsp;&nbsp;&nbsp;&nbsp;
+        |&nbsp;&nbsp;&nbsp;&nbsp;
         a(href='/users/register') 用户注册

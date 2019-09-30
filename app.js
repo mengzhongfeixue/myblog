@@ -9,6 +9,8 @@ const connectFlash= require('connect-flash'); //跨对话消息传递
 const messages = require('express-messages');
 const passport = require('passport');
 const passportConfig=require('./passport_config');
+const mongoose = require('./models/db.js');
+const MongoStore = require('connect-mongo')(session);
 const sd = require('silly-datetime');  //格式化日期时间的方法的插件
 const truncate = require('truncate');  //截断文本(比如段落等)的方法的插件
 
@@ -31,6 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//post请求的req.body解析的第三方插件body-parser
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
@@ -39,22 +42,44 @@ app.use(session({
   secret: 'blog',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: { secure: false },
+  //connect-mongo(数据库保存会话插件)的会话配置
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
-app.use(passport.initialize());
-app.use(passport.session());
-//app.use(passportConfig.init);
+//登录验证passport策略和会话配置
 app.use(function(req,res,next){
   passportConfig.init();
   next();
 });
+//登录验证passport中间件配置
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(function(req,res,next){
+  req.user = null;
+  if(req.session.passport&&req.session.passport.user){
+    authorsApi.AuthorModel.findOne({_id:req.session.passport.user},function(err,user){
+      if(err){
+        return next(err)
+      }
+      user.password = null;
+      req.user = user;
+      next();
+    })
+  }else{
+    next();
+  }
+});
+//跨会话通知connect-flash中间件使用
 app.use(connectFlash());
 app.use(function(req,res,next){
   res.locals.messages=messages(req,res);
+  app.locals.user=req.user;
+  console.log(req.session)
   next();
 });
 
-
+//第三方插件日期时间处理方法和截取字符串方法注册到全局，方便公用。
 app.use(function(req,res,next){
   res.locals.sd = sd;
   res.locals.truncate = truncate;

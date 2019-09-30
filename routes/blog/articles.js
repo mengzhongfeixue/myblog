@@ -96,6 +96,21 @@ const catesApi = require('../../models/categories')
       search.title=new RegExp(req.body.keyword.trim(),'i');
       render(req,res,'blog/home/index','getArticles',joinJson(search,{published:true}))
     })
+    //添加文章
+    router.get('/add',function(req,res,next){
+      require('../users/users').requireLogin(req,res,next)
+    },function(req,res,next){
+      res.write('hahha')
+    })
+
+    //设置中间件，只有用户才能访问
+    requireLogin=function(req,res,next){
+      if(req.user){
+        next();
+      }else{
+        next(new Error('登录用户才有权访问'))
+      }
+    }
 
     
     module.exports = router;  
