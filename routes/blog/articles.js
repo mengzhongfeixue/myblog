@@ -82,11 +82,15 @@ const catesApi = require('../../models/categories')
 
     //处理详情页点赞功能
     router.get('/article/:favorate', function(req,res,next){
+      require('../users/users').requireLogin(req,res,next)
+    },function(req,res,next){
       let con=joinJson({_id:req.query._id},{favorate:req.params.favorate})
       render(req,res,'blog/articles/article','updateFavoraties',con)     
     }) 
     //添加评论提交表单处理
-    router.post('/article/comment/:_id', function(req,res,next){
+    router.post('/article/comment/:_id',function(req,res,next){
+      require('../users/users').requireLogin(req,res,next)
+    }, function(req,res,next){
       let con=joinJson({_id:req.params._id},{content:req.body})
       render(req,res,'blog/articles/article','updateComments',con)     
     }) 
@@ -97,20 +101,19 @@ const catesApi = require('../../models/categories')
       render(req,res,'blog/home/index','getArticles',joinJson(search,{published:true}))
     })
     //添加文章
-    router.get('/add',function(req,res,next){
-      require('../users/users').requireLogin(req,res,next)
-    },function(req,res,next){
-      res.write('hahha')
+    router.post('/add',function(req,res,next){
+      req.body.author=req.user._id;
+      artsApi.addArticle(req.body).then(isAdded=>{
+        if(isAdded.ok==1){
+          req.flash('success','文章添加成功!');
+          res.render(`/users/articlesList`)
+        }else{
+          req.flash('failed','文章添加失败!');
+        }
+      })
     })
+    //编辑文章
 
-    //设置中间件，只有用户才能访问
-    requireLogin=function(req,res,next){
-      if(req.user){
-        next();
-      }else{
-        next(new Error('登录用户才有权访问'))
-      }
-    }
-
+    router.render=render; //users个人中心渲染个人文章列表时用
     
     module.exports = router;  

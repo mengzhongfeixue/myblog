@@ -1,0 +1,32 @@
+extends ../../blog/home/layout
+block content
+  .container-fluid
+    .row
+      .col-sm-3.col-md-2.sidebar
+        block sidebar
+          ul.nav.nav-sidebar
+            li(class={active:menu=='data'})
+              a(href='/users/data')
+                i.fa.fa-th-list
+                | &nbsp;&nbsp;个人资料
+                span.sr-only (current)
+            li(class={active:menu=='articlesList'})
+              a(href='/users/articlesList') 
+                i.fa.fa-th-list
+                | &nbsp;&nbsp;文章列表
+            li(class={active:menu=='addArticle'})
+              a(href='/users/addArticle') 
+                i.fa.fa-list
+                |&nbsp;&nbsp;添加文章
+            
+      .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+        block section
+
+
+
+
+
+
+
+
+

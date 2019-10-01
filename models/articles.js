@@ -128,7 +128,17 @@
     }
     //添加文章
     function addArticle(data={}){
-        return new ArticleModel(data).save()
+      data.slug=pinyin(data.title,{
+            style:pinyin.STYLE_NORMAL,
+            heteronym:false
+          }).map(function(item){
+            return item[0];
+          }).join('-');
+      data.category!=''?data.category:'Cate-sunt';
+      data.meta={favoraties:0};
+      data.comments=[];
+      data.created=new Date();
+      return new ArticleModel(data).save()
     }
 
     //删除文章

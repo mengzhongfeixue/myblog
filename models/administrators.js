@@ -33,6 +33,11 @@
 	function sortAdmins(condition){
 		return AdminModel.find().sort(condition).exec() 
 	}
+	//登录验证
+    AdminModel.prototype.verifyPassword = function(password){
+    	//console.log('password,AdminModel.password,isMatched:',password,this.password,md5(password) == this.password)
+    	return md5(password) === this.password;
+    }
 
 	module.exports={
 		AdminModel,

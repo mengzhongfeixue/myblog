@@ -14,14 +14,14 @@ block main
           ul.nav.navbar-nav.navbar-right
             if user
               li
-                a=user.name
+                a.blog-nav-item(href='/users/data')=user.name
               li
-                a(href='/users/logout')
+                a.blog-nav-item(href='/users/logout')
                   i.fa.fa-unlock-alt
                   | &nbsp;注销
             else
               li
-                a(href='/users/login')
+                a.blog-nav-item(href='/users/login')
                   i.fa.fa-lock-alt
                   | &nbsp;登录
           form.navbar-form.navbar-right(method='post',action='/blog/articles/search')

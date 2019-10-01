@@ -1,0 +1,10 @@
+extends layout
+block section 
+  h2 我的资料
+    small.pull-right#massages-tips 
+      !=messages()
+  p 用户名：&nbsp;&nbsp;#{user.name}
+  p 邮箱：&nbsp;&nbsp;#{user.email}
+  p 密码：&nbsp;&nbsp;******
+  a(href=`/users/modifyData`,target='_blank')
+    button 修改资料

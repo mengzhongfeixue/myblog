@@ -26,6 +26,7 @@
 	}
 	//修改作者
 	function updateAuthor(condition={},data={}){
+		if(data.password){data.password=md5(data.password)}
 		return AuthorModel.updateOne(condition,data).exec()
 	}
     //作者排序

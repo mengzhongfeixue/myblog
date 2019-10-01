@@ -5,10 +5,19 @@
     const { check, validationResult } = require('express-validator');
     const md5=require('md5');
     const passport = require('passport');
-    //如果访问`/blog`，重定向到`/blog/articles`
+
+    const artsApi =require('../../models/articles');
+    const catesApi = require('../../models/categories')
+    //如果访问`/users`，重定向
     router.get('/',function(req,res,next){
         res.redirect('/users/login')
     })
+
+    router.use('/:menu',function(req,res,next){
+        res.locals.menu=req.params.menu;
+        next();
+    })
+
     router.get('/login',function(req,res,next){
         res.render('users/login')
     })
@@ -78,7 +87,9 @@
         res.redirect('/blog/articles');
     })
 
-    router.requireLogin=function(req,res,next){
+
+    //只有登录才能访问
+    requireLogin=function(req,res,next){
       if(req.user){
         next();
       }else{
@@ -87,4 +98,54 @@
       }
     }
 
+    //个人中心
+
+    //个人资料
+    router.get('/data',function(req,res,next){
+      requireLogin(req,res,next);
+    },function(req,res,next){
+      res.render('users/personalCenter/data',{user:req.user})
+    })
+    //个人资料修改
+    router.get('/modifyData',function(req,res,next){
+      requireLogin(req,res,next);
+    },function(req,res,next){
+      res.render('users/personalCenter/modifyData',{user:req.user})
+    })
+    //个人资料修改提交
+    router.post('/edit/:_id', [
+      // username must be an email
+      check('email').isEmail().withMessage('请输入正确的邮箱'),
+      // password must be at least 5 chars long
+      check('password').isLength({ min: 6,max:15 }).withMessage('密码必须是六至十五位数字或字母')
+    ], function(req,res,next){
+      const errors = validationResult(req);
+      if(!errors.isEmpty()){
+        res.render('users/personalCenter/modifyData',{errors:errors.errors})
+      }else{
+        authorsApi.updateAuthor(req.params,req.body).then(isUpdated=>{
+          if(isUpdated.ok==1){
+            req.flash('success','作者修改成功!');
+            res.redirect(`/users/data`)
+          }else{
+            req.flash('failed','作者修改失败!');
+          }
+        })
+      }
+    })        
+    //个人文章列表
+    router.get('/articlesList',function(req,res,next){
+      requireLogin(req,res,next);
+    },function(req,res,next){
+      require('../blog/articles').render(req,res,'users/personalCenter/articlesList','getArticles',{author:req.user})
+    })    
+    //个人添加文章
+    router.get('/addArticle',function(req,res,next){
+      requireLogin(req,res,next);
+    },async function(req,res,next){
+      let categories = await catesApi.getCategories();
+      res.render('users/personalCenter/addArticle',{user:req.user,categories})
+    })
+
+    router.requireLogin=requireLogin;
     module.exports = router;
